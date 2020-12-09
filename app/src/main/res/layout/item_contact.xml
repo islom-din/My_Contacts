@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
+    android:padding="7dp"
     android:foreground="?selectableItemBackgroundBorderless">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -10,7 +10,6 @@
         android:id="@+id/profileImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:civ_border_width="2dp"
         android:src="@drawable/avatar"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"/>

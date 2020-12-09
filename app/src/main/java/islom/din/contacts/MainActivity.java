@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
 
     private void setContactsArray() {
         contacts = new ArrayList<>();
+        contacts.add(new Contact(1, "Islom", "Nuridinov",
+                "+992 (900) 20-16-53", "islom.din.nur@gmail.com"));
     }
 
     private void initRecyclerView() {
@@ -74,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
          */
 
         Intent intent = new Intent(MainActivity.this, AboutContactActivity.class);
-        intent.putExtra("id", contacts.get(position).getName());
+        intent.putExtra("id", contacts.get(position).getId());
         intent.putExtra("name", contacts.get(position).getName());
-        intent.putExtra("lastName", contacts.get(position).getName());
-        intent.putExtra("phone", contacts.get(position).getName());
-        intent.putExtra("email", contacts.get(position).getName());
+        intent.putExtra("lastName", contacts.get(position).getLastName());
+        intent.putExtra("phone", contacts.get(position).getPhone());
+        intent.putExtra("email", contacts.get(position).getEmail());
         startActivity(intent);
     }
 }

@@ -31,7 +31,16 @@
                     android:id="@+id/searchIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/search_icon"
+                    android:src="@drawable/icon_editcontact"
+                    android:layout_toStartOf="@+id/deleteIcon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="25dp" />
+
+                <ImageView
+                    android:id="@+id/deleteIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_delete_contact"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="25dp" />
@@ -42,6 +51,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Profile of contact-->
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profileImage"
         android:layout_width="200dp"
@@ -49,35 +59,79 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
-        android:src="@drawable/avatar"
-        android:visibility="invisible"
-        app:civ_border_width="2dp" />
+        android:src="@drawable/avatar" />
 
+    <!-- Name of contact-->
     <TextView
         android:id="@+id/contactName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="fdsf"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/profileImage"
         android:layout_margin="15dp"/>
 
+    <!-- Phone of contact-->
     <androidx.cardview.widget.CardView
         android:id="@+id/phoneCard"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-        android:layout_below="@+id/contactName"/>
+        android:layout_below="@+id/contactName">
 
+            <ImageView
+                android:id="@+id/iconCall"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_call"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="start|center_vertical"/>
+
+            <TextView
+                android:id="@+id/contactPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+992 900 201 653"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical|center" />
+
+            <ImageView
+                android:id="@+id/sms"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/icon_sms"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Email of contact-->
     <androidx.cardview.widget.CardView
         android:id="@+id/emailCard"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-        android:layout_below="@+id/phoneCard"/>
+        android:layout_below="@+id/phoneCard">
+
+        <ImageView
+            android:id="@+id/emailIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/icon_email"/>
+
+        <TextView
+            android:id="@+id/contactEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="islom.din.nur@gmail.com"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical|center" />
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
