@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <!-- Tool bar -->
     <com.google.android.material.appbar.AppBarLayout
@@ -20,30 +20,30 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/backArrow"
+                    android:id="@+id/iconArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_back"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true" />
-
-                <ImageView
-                    android:id="@+id/searchIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_editcontact"
-                    android:layout_toStartOf="@+id/deleteIcon"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="25dp" />
+                    android:src="@drawable/icon_back" />
 
                 <ImageView
-                    android:id="@+id/deleteIcon"
+                    android:id="@+id/iconEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_delete_contact"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="25dp"
+                    android:layout_toStartOf="@+id/iconDelete"
+                    android:src="@drawable/icon_editcontact" />
+
+                <ImageView
+                    android:id="@+id/iconDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="25dp" />
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/icon_delete_contact" />
 
             </RelativeLayout>
 
@@ -57,7 +57,6 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/avatar" />
 
@@ -66,44 +65,44 @@
         android:id="@+id/contactName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/profileImage"
-        android:layout_margin="15dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
 
     <!-- Phone of contact-->
     <androidx.cardview.widget.CardView
         android:id="@+id/phoneCard"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_below="@+id/contactName"
         android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:layout_below="@+id/contactName">
+        app:cardCornerRadius="10dp">
 
-            <ImageView
-                android:id="@+id/iconCall"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icon_call"
-                android:layout_marginStart="20dp"
-                android:layout_gravity="start|center_vertical"/>
+        <ImageView
+            android:id="@+id/iconCall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/icon_call" />
 
-            <TextView
-                android:id="@+id/contactPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+992 900 201 653"
-                android:textSize="18sp"
-                android:layout_gravity="center_vertical|center" />
+        <TextView
+            android:id="@+id/contactPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center"
+            android:text="+992 900 201 653"
+            android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/sms"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/icon_sms"/>
+        <ImageView
+            android:id="@+id/iconSms"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/icon_sms" />
 
     </androidx.cardview.widget.CardView>
 
@@ -112,25 +111,25 @@
         android:id="@+id/emailCard"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_below="@+id/phoneCard"
         android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:layout_below="@+id/phoneCard">
+        app:cardCornerRadius="10dp">
 
         <ImageView
-            android:id="@+id/emailIcon"
+            android:id="@+id/iconEmail"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="20dp"
-            android:src="@drawable/icon_email"/>
+            android:src="@drawable/icon_email" />
 
         <TextView
             android:id="@+id/contactEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center"
             android:text="islom.din.nur@gmail.com"
-            android:textSize="18sp"
-            android:layout_gravity="center_vertical|center" />
+            android:textSize="18sp" />
 
     </androidx.cardview.widget.CardView>
 

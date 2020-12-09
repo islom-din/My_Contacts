@@ -1,12 +1,25 @@
 package islom.din.contacts;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * В момент запуска данной activity, в методе onCreate последовательно выполняются три метода,
+ * которые соответственно отвечают за следующие действия
+ *  1) Получение данных из MainActivity --> метод getExtraData
+ *  2) Установка обработчиков нажатий --> метод setListeners
+ *  3) Показ данных о пользователе --> метод showContactsInfo
+ */
 
 public class AboutContactActivity extends AppCompatActivity {
 
@@ -17,37 +30,133 @@ public class AboutContactActivity extends AppCompatActivity {
     private String phone;
     private String email;
 
-    // Виджеты в layout
+    // Основные виджеты в layout
     private CircleImageView profileImage;
     private TextView contactName;
     private TextView contactPhone;
     private TextView contactEmail;
 
+    // Виджеты с обработчиками
+    private ImageView backArrow;
+    private ImageView editContact;
+    private ImageView deleteContact;
+    private ImageView callIcon;
+    private ImageView smsIcon;
+    private ImageView emailIcon;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_contact);
-        profileImage = findViewById(R.id.profileImage);
-        contactName = findViewById(R.id.contactName);
-        contactPhone = findViewById(R.id.contactPhone);
-        contactEmail = findViewById(R.id.contactEmail);
 
-        getExtraData(); // Вызываем этот метод в первую очередь
-        showContactsData(); // Дальше вызываем этот метод, чтобы показатьданные о пользователе
+        getExtraData(); // 1) Получим данные из MainActivity
+
+        setListeners(); // 2) Установим обработчики нажатий на элементы в верхнем toolbar
+
+        showContactsInfo(); // 3) Дальше вызываем этот метод, чтобы показать данные о пользователе
     }
 
     private void getExtraData() {
         /**
-         * Получение данных, отправленных из MainActivity. Этот метод вызывается в первую очередь.
+         * Получение данных, отправленных из MainActivity. Этот метод вызывается перед тем,
+         * как показывать данные о пользователе
          */
-        id = getIntent().getIntExtra("id", 1);
+        id = getIntent().getIntExtra("id", -1);
         name = getIntent().getStringExtra("name");
         lastName = getIntent().getStringExtra("lastName");
         phone = getIntent().getStringExtra("phone");
         email = getIntent().getStringExtra("email");
     }
 
-    private void showContactsData() {
+    private void setListeners() {
+        /**
+         * Инициализация обработчиков
+         */
+        backArrow = findViewById(R.id.iconArrow);
+        editContact = findViewById(R.id.iconEdit);
+        deleteContact = findViewById(R.id.iconDelete);
+        callIcon = findViewById(R.id.iconCall);
+        smsIcon = findViewById(R.id.iconSms);
+        emailIcon = findViewById(R.id.iconEmail);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            // При нажатии на стрелку покинуть текущую активити
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        editContact.setOnClickListener(new View.OnClickListener() {
+            // Редактировать контакт
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AboutContactActivity.this, AddContactActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
+                intent.putExtra("lastName", lastName);
+                intent.putExtra("phone", phone);
+                intent.putExtra("email", email);
+                startActivity(intent);
+            }
+        });
+
+        deleteContact.setOnClickListener(new View.OnClickListener() {
+            // Удалить контакт
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        callIcon.setOnClickListener(new View.OnClickListener() {
+            // Позвонить по номеру (Вызов системного приложения звонков)
+            // Используем для этого неявный intent
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        smsIcon.setOnClickListener(new View.OnClickListener() {
+            // Написать sms контакту (Вызов системного приложения sms)
+            // Используем для этого неявный intent
+            @SuppressLint("QueryPermissionsNeeded")
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", phone, null)));
+            }
+        });
+
+        emailIcon.setOnClickListener(new View.OnClickListener() {
+            // Написать письмо (Вызов системного приложения почты)
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, email);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showContactsInfo() {
+        /**
+         * Показать данные о пользователе
+         */
+        profileImage = findViewById(R.id.profileImage);
+        contactName = findViewById(R.id.contactName);
+        contactPhone = findViewById(R.id.contactPhone);
+        contactEmail = findViewById(R.id.contactEmail);
+
         contactName.setText(name + " " + lastName);
         contactPhone.setText(phone);
         contactEmail.setText(email);

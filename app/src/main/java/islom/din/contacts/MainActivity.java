@@ -47,8 +47,13 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
 
     private void setContactsArray() {
         contacts = new ArrayList<>();
-        contacts.add(new Contact(1, "Islom", "Nuridinov",
-                "+992 (900) 20-16-53", "islom.din.nur@gmail.com"));
+        contacts.add(new Contact(1, "Islom", "Nuridinov", "900201653", "islom.din.nur@gmail.com"));
+        contacts.add(new Contact(2, "David", "Harbor", "900201653", "harbor@gmail.com"));
+        contacts.add(new Contact(3, "Keanu", "Reeves", "3423423", "kianu@gmail.com"));
+        contacts.add(new Contact(4, "Lira", "Able", "900213333", "karl@gmail.com"));
+        contacts.add(new Contact(5, "Klara", "Rose", "918294567", "close.23@gmail.com"));
+        contacts.add(new Contact(6, "Jin", "Benington", "553122312", "jin@yandex.ru"));
+        contacts.add(new Contact(7, "Diana", "Shvimmer", "900201653", "islom.din.nur@gmail.com"));
     }
 
     private void initRecyclerView() {
