@@ -12,7 +12,6 @@
         android:layout_height="60dp"
         app:civ_border_width="2dp"
         android:src="@drawable/avatar"
-        app:civ_border_color="#FF000000"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"/>
 

@@ -21,4 +21,10 @@
 
     </style>
 
+    <style name="ToolBar" parent="Base.V7.Widget.AppCompat.Toolbar">
+        <item name="colorSecondary">@color/green</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+    </style>
+
 </resources>

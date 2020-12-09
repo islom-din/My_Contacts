@@ -12,14 +12,16 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements ContactAdapter.OnItemClickListener {
 
     FloatingActionButton fab;
     RecyclerView recyclerView;
     ContactAdapter adapter;
 
-    // Массив с данными о контактах
-    Contact[] contacts = new Contact[12];
+    // Список с данными о контактах
+    ArrayList<Contact> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +46,15 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
     }
 
     private void setContactsArray() {
-        contacts[0] = new Contact(1, "Islom", "Nuridinov");
-        contacts[1] = new Contact(2, "Alex", "Cold");
-        contacts[2] = new Contact(3, "Diana", "Sparrow");
-        contacts[3] = new Contact(4, "Dean", "Winchester");
-        contacts[4] = new Contact(5, "Sam", "Winchester");
-        contacts[5] = new Contact(6, "Erric", "Banas");
-        contacts[6] = new Contact(7, "Dominic", "Torretto");
-        contacts[7] = new Contact(8, "Aiden", "Pierce");
-        contacts[8] = new Contact(9, "Elliot", "Alderson");
-        contacts[9] = new Contact(10, "Michel", "Rodriges");
-        contacts[10] = new Contact(11, "Rachel", "Wood");
-        contacts[11] = new Contact(12, "Eleonora", "Dean");
+        contacts = new ArrayList<>();
     }
 
     private void initRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this,
+                linearLayoutManager.getOrientation());
         adapter = new ContactAdapter(contacts, this);
 
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -74,6 +66,19 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Some text", Toast.LENGTH_SHORT).show();
+        /**
+         * Этот метод из интерфейса, который реализует наш MainActivity. Обратите внимание, что сюда
+         * передаётся position в качестве параметра. position - это позиция нажатого элемента. Теперь
+         * мы можем обратиться к индексу в arrayList, который соответствует параметру position, а
+         * затем вытащить объект по этому индексу и передать эти свойства через intent в другую активити.
+         */
+
+        Intent intent = new Intent(MainActivity.this, AboutContactActivity.class);
+        intent.putExtra("id", contacts.get(position).getName());
+        intent.putExtra("name", contacts.get(position).getName());
+        intent.putExtra("lastName", contacts.get(position).getName());
+        intent.putExtra("phone", contacts.get(position).getName());
+        intent.putExtra("email", contacts.get(position).getName());
+        startActivity(intent);
     }
 }
