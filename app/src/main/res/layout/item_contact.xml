@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="7dp"
     android:foreground="?selectableItemBackgroundBorderless">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profileImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/avatar"
         android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"/>
 
     <TextView
@@ -23,6 +23,5 @@
         android:layout_toRightOf="@+id/profileImage"
         android:textSize="22sp"
         android:textColor="@color/black"/>
-
 
 </RelativeLayout>
