@@ -4,12 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -91,13 +95,13 @@ public class AboutContactActivity extends AppCompatActivity {
             // Редактировать контакт
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AboutContactActivity.this, AddContactActivity.class);
-                intent.putExtra("id", id);
-                intent.putExtra("name", name);
-                intent.putExtra("lastName", lastName);
-                intent.putExtra("phone", phone);
-                intent.putExtra("email", email);
-                startActivity(intent);
+                RelativeLayout displayContainer = findViewById(R.id.displayContainer);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        AboutContactActivity.this, R.style.BottomSheetDialogTheme);
+                View dialogView = LayoutInflater.from(AboutContactActivity.this)
+                        .inflate(R.layout.bottom_sheet_display, displayContainer);
+                bottomSheetDialog.setContentView(dialogView);
+                bottomSheetDialog.show();
             }
         });
 
