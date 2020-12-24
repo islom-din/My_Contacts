@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -55,6 +56,13 @@ public class AboutContactActivity extends AppCompatActivity {
     private ImageView smsIcon;
     private ImageView emailIcon;
 
+    // Виджеты в панели редактирования
+    private EditText editName;
+    private EditText editLastName;
+    private EditText editPhone;
+    private EditText editEmail;
+    private Button buttonUpdate;
+
     // База данных
     DBHelper dbHelper;
 
@@ -67,7 +75,11 @@ public class AboutContactActivity extends AppCompatActivity {
         getExtraData(); // 1) Получим данные из MainActivity
 
         setListeners(); // 2) Установим обработчики нажатий на элементы в верхнем toolbar
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         showContactsInfo(); // 3) Дальше вызываем этот метод, чтобы показать данные о пользователе
     }
 
@@ -111,6 +123,52 @@ public class AboutContactActivity extends AppCompatActivity {
                         AboutContactActivity.this, R.style.BottomSheetDialogTheme);
                 View dialogView = LayoutInflater.from(AboutContactActivity.this)
                         .inflate(R.layout.bottom_sheet_display, displayContainer);
+
+                // Инициализируем виджеты
+                editName = dialogView.findViewById(R.id.name);
+                editLastName = dialogView.findViewById(R.id.lastName);
+                editPhone = dialogView.findViewById(R.id.phone);
+                editEmail = dialogView.findViewById(R.id.email);
+                buttonUpdate = dialogView.findViewById(R.id.buttonUpdate);
+
+                editName.setText(name);
+                editLastName.setText(lastName);
+                editPhone.setText(phone);
+                editEmail.setText(email);
+
+                // Обновить данные контакта
+                buttonUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ContentValues cv = new ContentValues();
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        if(!editName.getText().toString().isEmpty() &&
+                            !editPhone.getText().toString().isEmpty()) {
+                            cv.put(dbHelper.NAME, editName.getText().toString());
+                            cv.put(dbHelper.LAST_NAME, editLastName.getText().toString());
+                            cv.put(dbHelper.PHONE, editPhone.getText().toString());
+                            cv.put(dbHelper.EMAIL, editEmail.getText().toString());
+                            db.update(dbHelper.TABLE_CONTACTS, cv, "_id = " + id, null);
+                            db.close();
+
+                            // Новые значения
+                            name = editName.getText().toString();
+                            lastName = editLastName.getText().toString();
+                            phone = editPhone.getText().toString();
+                            email = editEmail.getText().toString();
+
+                            bottomSheetDialog.dismiss();
+
+                            showContactsInfo();
+                        } else {
+                            Toast.makeText(AboutContactActivity.this,
+                                    "Заполните обязательные поля",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
                 bottomSheetDialog.setContentView(dialogView);
                 bottomSheetDialog.show();
             }
