@@ -36,4 +36,9 @@
         <item name="android:colorControlActivated">#037A1B</item>
     </style>
 
+    <style name="Base.V7.Widget.AppCompat.EditText.editText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorControlActivated">@color/white</item>
+    </style>
+
 </resources>

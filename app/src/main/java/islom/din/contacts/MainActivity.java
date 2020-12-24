@@ -5,14 +5,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,13 +37,28 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
     DBHelper dbHelper;
     SQLiteDatabase database;
 
+    // Виджеты
+    ImageView searchIcon;
+    ImageView closeIcon;
+    AppBarLayout appBarLayout;
+    AppBarLayout searchBarLayout;
+    EditText editText;
+
+    private InputMethodManager imm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
 
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); // system service for keyboard
         fab = findViewById(R.id.fab);
+        searchIcon = findViewById(R.id.searchIcon);
+        closeIcon = findViewById(R.id.closeIcon);
+        appBarLayout = findViewById(R.id.appBar);
+        searchBarLayout = findViewById(R.id.searchAppBar);
+        editText = findViewById(R.id.editText);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +67,51 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
                 startActivity(intent);
             }
         });
+
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchBarLayout.setVisibility(View.VISIBLE);
+                editText.requestFocus(); // Запросить фокус
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT); // Показать клавиатуру
+            }
+        });
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchBarLayout.setVisibility(View.GONE);
+                editText.setText("");
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0); // hide keyboard
+                adapter.filterList(contacts);
+            }
+        });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+    }
+
+    private void filter(String text) {
+        ArrayList<Contact> filteredList = new ArrayList<>();
+        for(Contact contact : contacts) {
+            String s = contact.getName() + " " + contact.getLastName();
+            if(s.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(contact);
+            }
+        }
+
+        adapter.filterList(filteredList);
     }
 
     @Override

@@ -43,6 +43,44 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+    
+    <!-- Search toolbar-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/searchAppBar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/closeIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:theme="@style/Base.V7.Widget.AppCompat.EditText.editText"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/closeIcon"
+                    android:layout_margin="5dp"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Main content-->
     <RelativeLayout

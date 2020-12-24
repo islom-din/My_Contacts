@@ -20,6 +20,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         localListener = listener;
     }
 
+    public void filterList(ArrayList<Contact> newList) {
+        this.contacts = newList;
+        notifyDataSetChanged();
+    }
+
     //==============================================================================================
     //                         Переопределяемые методы для адаптера
     //==============================================================================================

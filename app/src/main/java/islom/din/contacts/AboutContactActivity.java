@@ -144,6 +144,10 @@ public class AboutContactActivity extends AppCompatActivity {
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
                         if(!editName.getText().toString().isEmpty() &&
                             !editPhone.getText().toString().isEmpty()) {
+
+                            editName.getText().toString().trim();
+                            editPhone.getText().toString().trim();
+                            editEmail.getText().toString().trim();
                             cv.put(dbHelper.NAME, editName.getText().toString());
                             cv.put(dbHelper.LAST_NAME, editLastName.getText().toString());
                             cv.put(dbHelper.PHONE, editPhone.getText().toString());

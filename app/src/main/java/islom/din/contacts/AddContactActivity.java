@@ -53,6 +53,9 @@ public class AddContactActivity extends AppCompatActivity {
                 phone = contactPhone.getText().toString();
                 email = contactEmail.getText().toString();
                 if(!name.isEmpty() && !phone.isEmpty()) {
+                    name.trim();
+                    lastName.trim();
+                    email.trim();
                     insertNewContact(name, lastName, phone, email);
                 } else {
                     Toast.makeText(AddContactActivity.this, "Заполните обязательные поля!",
