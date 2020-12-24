@@ -52,7 +52,13 @@ public class AddContactActivity extends AppCompatActivity {
                 lastName = contactLastName.getText().toString();
                 phone = contactPhone.getText().toString();
                 email = contactEmail.getText().toString();
-                insertNewContact(name, lastName, phone, email);
+                if(!name.isEmpty() && !phone.isEmpty()) {
+                    insertNewContact(name, lastName, phone, email);
+                } else {
+                    Toast.makeText(AddContactActivity.this, "Заполните обязательные поля!",
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -71,6 +77,4 @@ public class AddContactActivity extends AppCompatActivity {
         Toast.makeText(AddContactActivity.this, "Контакт добавлен", Toast.LENGTH_SHORT).show();
         finish();
     }
-
-
 }

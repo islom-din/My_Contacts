@@ -1,21 +1,28 @@
 package islom.din.contacts;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import islom.din.contacts.database.DBHelper;
 
 /**
  * В момент запуска данной activity, в методе onCreate последовательно выполняются три метода,
@@ -48,10 +55,14 @@ public class AboutContactActivity extends AppCompatActivity {
     private ImageView smsIcon;
     private ImageView emailIcon;
 
+    // База данных
+    DBHelper dbHelper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_contact);
+        dbHelper = new DBHelper(this);
 
         getExtraData(); // 1) Получим данные из MainActivity
 
@@ -109,7 +120,7 @@ public class AboutContactActivity extends AppCompatActivity {
             // Удалить контакт
             @Override
             public void onClick(View view) {
-
+                deleteThisContact();
             }
         });
 
@@ -148,7 +159,24 @@ public class AboutContactActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void deleteThisContact() {
+        // Показать диалог подтверждения удаления контакта
+        new AlertDialog.Builder(AboutContactActivity.this)
+                .setTitle("Внимание!")
+                .setMessage("Вы уверены, что хотите удалить этот контакт?")
+                .setNegativeButton("Отмена", null)
+                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        SQLiteDatabase database = dbHelper.getWritableDatabase();
+                        database.delete(dbHelper.TABLE_CONTACTS, "_id = " + id, null);
+                        Toast.makeText(AboutContactActivity.this, "Контакт удалён", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .create()
+                .show();
     }
 
     @SuppressLint("SetTextI18n")
