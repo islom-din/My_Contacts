@@ -6,17 +6,27 @@ public class Contact {
     private String lastName;
     private String phone;
     private String email;
+    private String img;
 
-    public Contact(int id, String name, String lastName, String phone, String email) {
+    public Contact(int id, String name, String lastName, String phone, String email, String img) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+        this.img = img;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getImg() {
+        return this.img;
     }
 
     public void setEmail(String email) {

@@ -16,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LAST_NAME = "lastName";
     public static final String PHONE = "phone";
     public static final String EMAIL = "email";
+    public static final String IMG = "img";
 
     public DBHelper(Context context) {
         super(context, NAME, null, DATABASE_VERSION);
@@ -28,7 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + NAME + " TEXT, "
                 + LAST_NAME + " TEXT, "
                 + PHONE + " TEXT, "
-                + EMAIL + " TEXT )" );
+                + EMAIL + " TEXT, "
+                + IMG + " TEXT )");
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +22,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import islom.din.contacts.database.DBHelper;
@@ -34,6 +39,7 @@ import islom.din.contacts.database.DBHelper;
  */
 
 public class AboutContactActivity extends AppCompatActivity {
+    private static final String TAG = "AboutContactActivity";
 
     // Extra-данные из MainActivity
     private int id;
@@ -41,6 +47,7 @@ public class AboutContactActivity extends AppCompatActivity {
     private String lastName;
     private String phone;
     private String email;
+    private String img;
 
     // Основные виджеты в layout
     private CircleImageView profileImage;
@@ -75,6 +82,21 @@ public class AboutContactActivity extends AppCompatActivity {
         getExtraData(); // 1) Получим данные из MainActivity
 
         setListeners(); // 2) Установим обработчики нажатий на элементы в верхнем toolbar
+
+        profileImage = findViewById(R.id.profileImage);
+
+        File file = new File(Environment.getExternalStorageDirectory(), img);
+        if(!img.equals("")) {
+            Glide.with(AboutContactActivity.this)
+                    .load(file)
+                    .into(profileImage);
+        }
+        else if(img.equals("")){
+            Glide.with(AboutContactActivity.this)
+                    .load(R.drawable.avatar)
+                    .into(profileImage);
+        }
+
     }
 
     @Override
@@ -93,6 +115,8 @@ public class AboutContactActivity extends AppCompatActivity {
         lastName = getIntent().getStringExtra("lastName");
         phone = getIntent().getStringExtra("phone");
         email = getIntent().getStringExtra("email");
+        img = getIntent().getStringExtra("img");
+        Log.d(TAG, "getExtraData!!!!!!!!!!!!!!!!!!!!1: " + img);
     }
 
     private void setListeners() {
@@ -123,6 +147,19 @@ public class AboutContactActivity extends AppCompatActivity {
                         AboutContactActivity.this, R.style.BottomSheetDialogTheme);
                 View dialogView = LayoutInflater.from(AboutContactActivity.this)
                         .inflate(R.layout.bottom_sheet_display, displayContainer);
+
+                File file = new File(Environment.getExternalStorageDirectory(), img);
+                ImageView imageView = dialogView.findViewById(R.id.profileImage);
+                if(!img.equals("")) {
+                    Glide.with(AboutContactActivity.this)
+                            .load(file)
+                            .into(imageView);
+                }
+                else if (img.equals("")) {
+                    Glide.with(AboutContactActivity.this)
+                            .load(R.drawable.avatar)
+                            .into(imageView);
+                }
 
                 // Инициализируем виджеты
                 editName = dialogView.findViewById(R.id.name);

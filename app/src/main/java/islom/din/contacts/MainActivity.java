@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
             int lastNameIndex = cursor.getColumnIndex(dbHelper.LAST_NAME);
             int phoneIndex = cursor.getColumnIndex(dbHelper.PHONE);
             int emailIndex = cursor.getColumnIndex(dbHelper.EMAIL);
+            int imgIndex = cursor.getColumnIndex(dbHelper.IMG);
 
             do {
                 contact = new Contact(
@@ -147,7 +148,8 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
                         cursor.getString(nameIndex),
                         cursor.getString(lastNameIndex),
                         cursor.getString(phoneIndex),
-                        cursor.getString(emailIndex)
+                        cursor.getString(emailIndex),
+                        cursor.getString(imgIndex)
                 );
                 contacts.add(contact);
             } while (cursor.moveToNext());
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this,
                 linearLayoutManager.getOrientation());
-        adapter = new ContactAdapter(contacts, this);
+        adapter = new ContactAdapter(contacts, this, MainActivity.this);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(itemDecoration);
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.On
         intent.putExtra("lastName", contacts.get(position).getLastName());
         intent.putExtra("phone", contacts.get(position).getPhone());
         intent.putExtra("email", contacts.get(position).getEmail());
+        intent.putExtra("img", contacts.get(position).getImg());
         startActivity(intent);
     }
 }
