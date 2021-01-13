@@ -8,8 +8,6 @@
 
 Для сдачи итогового задания, необходимо выполнить несколько пунктов в To Do снизу.
 
----
-
 ## To do:
 * Переписать функционал на Kotlin
 * Использовать для работы с БД [Room](https://developer.android.com/training/data-storage/room)
@@ -22,8 +20,6 @@
 * Изменить внешний вид пользовательского интерфейса
 * Использовать [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) для внедрения зависимостей
 * Использовать для разметки [Jetpack Compose](https://developer.android.com/jetpack/compose)
-
----
 
 ## Screens:
 
